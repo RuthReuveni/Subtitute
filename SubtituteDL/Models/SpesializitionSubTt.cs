@@ -5,7 +5,7 @@ namespace SubtituteDL.Models;
 
 public partial class SpesializitionSubTt
 {
-    public string Id { get; set; } = null!;
+    public int Id { get; set; }
 
     public int SpecializationId { get; set; }
 

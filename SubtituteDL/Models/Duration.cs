@@ -7,7 +7,7 @@ public partial class Duration
 {
     public int DurationId { get; set; }
 
-    public decimal DurationName { get; set; }
+    public string DurationName { get; set; } = null!;
 
     public virtual ICollection<Request> Requests { get; } = new List<Request>();
 

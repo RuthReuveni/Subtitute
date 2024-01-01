@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SubtituteDL\SubtituteDL.csproj" />
-    <ProjectReference Include="..\SubtituteDTO\SubtituteDTO.csproj" />
   </ItemGroup>
 
 </Project>

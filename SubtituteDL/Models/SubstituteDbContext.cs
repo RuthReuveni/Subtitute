@@ -41,7 +41,7 @@ public partial class SubstituteDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-R5RADSP;Database=substituteDB;Trusted_Connection=True;encrypt=false;");
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-R5RADSP;Database= substituteDB;Trusted_Connection=True;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -56,7 +56,7 @@ public partial class SubstituteDbContext : DbContext
         {
             entity.ToTable("Duration");
 
-            entity.Property(e => e.DurationName).HasColumnType("numeric(18, 0)");
+            entity.Property(e => e.DurationName).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Lesson>(entity =>
@@ -76,11 +76,8 @@ public partial class SubstituteDbContext : DbContext
 
         modelBuilder.Entity<Network>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("Network");
+            entity.ToTable("Network");
 
-            entity.Property(e => e.NetworkId).ValueGeneratedOnAdd();
             entity.Property(e => e.NetworkName).HasMaxLength(50);
         });
 
@@ -122,6 +119,11 @@ public partial class SubstituteDbContext : DbContext
                 .HasForeignKey(d => d.AreasId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_School_Areas");
+
+            entity.HasOne(d => d.NetworkNavigation).WithMany(p => p.Schools)
+                .HasForeignKey(d => d.Network)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_School_Network");
         });
 
         modelBuilder.Entity<Specialization>(entity =>
@@ -154,9 +156,6 @@ public partial class SubstituteDbContext : DbContext
         {
             entity.ToTable("SpesializitionSubTT");
 
-            entity.Property(e => e.Id)
-                .HasMaxLength(10)
-                .IsFixedLength();
             entity.Property(e => e.SubTtid).HasColumnName("SubTTId");
 
             entity.HasOne(d => d.Specialization).WithMany(p => p.SpesializitionSubTts)

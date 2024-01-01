@@ -31,6 +31,8 @@ public partial class School
 
     public virtual Area Areas { get; set; } = null!;
 
+    public virtual Network NetworkNavigation { get; set; } = null!;
+
     public virtual ICollection<SubTt> SubTts { get; } = new List<SubTt>();
 
     public virtual ICollection<SubTtschool> SubTtschools { get; } = new List<SubTtschool>();
