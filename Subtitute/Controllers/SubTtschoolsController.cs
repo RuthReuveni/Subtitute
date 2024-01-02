@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Subtitute.Controllers;
+using SubtituteBL;
+using SubtituteDTO.DTO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +11,94 @@ namespace Subtitute.Controllers
     [ApiController]
     public class SubTtschoolsController : ControllerBase
     {
+        ISubTtschoolBL _subTtschoolBL;
+        public SubTtschoolsController(ISubTtschoolBL subTtschoolBL)
+        {
+            _subTtschoolBL = subTtschoolBL;
+        }
         // GET: api/<SubTtschoolsController>
         [HttpGet]
-        public IEnumerable<string> Get()
+
+        public async Task<List<SubTtschoolDTO>> GetAllTeacherSub()
         {
-            return new string[] { "value1", "value2" };
+            List<SubTtschoolDTO> result = await _subTtschoolBL.GetAllTeachersSub();
+            return result;
         }
 
         // GET api/<SubTtschoolsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<SubTtschoolDTO> GetTeacherById(int id)
         {
-            return "value";
+            try
+            {
+                SubTtschoolDTO subTtschoolDTO = await _subTtschoolBL.GetTeacherSubById(id);
+                return subTtschoolDTO;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while conversion to TeacherDTO: {ex.Message}");
+                throw;
+            }
         }
 
         // POST api/<SubTtschoolsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<SubTtschoolDTO> AddTeacher(SubTtschoolDTO subTtschoolDTO)
         {
+            try
+            {
+                SubTtschoolDTO _subTtschoolDTO = await _subTtschoolBL.AddTeacherSub(subTtschoolDTO);
+
+                return _subTtschoolDTO;
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"An error occurred while adding techers: {ex.Message}");
+
+                throw;
+            }
         }
 
         // PUT api/<SubTtschoolsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
 
+        public async Task<SubTtschoolDTO> UpdateTeacher(SubTtschoolDTO subTtschoolDTO, int id)
+        {
+            try
+            {
+                SubTtschoolDTO _subTtschoolDTO = await _subTtschoolBL.UpdateTeacherSub(subTtschoolDTO, id);
+                return _subTtschoolDTO;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("teacher not found");
+            }
+        }
         // DELETE api/<SubTtschoolsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<SubTtschoolDTO> DeleteTeacherSub(SubTtschoolDTO subTtschoolDTO, int id)
         {
+
+            try
+            {
+                SubTtschoolDTO _subTtschoolDTO = await _subTtschoolBL.DeleteTeacherSub(subTtschoolDTO, id);
+                return _subTtschoolDTO;
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"An error occurred while fetching techers: {ex.Message}");
+
+                throw;
+            }
         }
     }
 }
+
+
+
+
+
+
