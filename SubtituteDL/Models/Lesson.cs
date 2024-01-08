@@ -19,5 +19,7 @@ public partial class Lesson
 
     public string? UrlDucament { get; set; }
 
+    public bool? Status { get; set; }
+
     public virtual Specialization Specialization { get; set; } = null!;
 }

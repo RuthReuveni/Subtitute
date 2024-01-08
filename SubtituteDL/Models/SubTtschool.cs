@@ -11,7 +11,7 @@ public partial class SubTtschool
 
     public int SchoolId { get; set; }
 
-    public bool Status { get; set; }
+    public bool? Status { get; set; }
 
     public virtual School School { get; set; } = null!;
 

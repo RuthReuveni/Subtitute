@@ -17,6 +17,8 @@ public partial class Teacher
 
     public int SchoolId { get; set; }
 
+    public bool? Status { get; set; }
+
     public virtual ICollection<Request> Requests { get; } = new List<Request>();
 
     public virtual School School { get; set; } = null!;

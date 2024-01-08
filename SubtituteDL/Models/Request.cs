@@ -17,6 +17,8 @@ public partial class Request
 
     public int DurationId { get; set; }
 
+    public bool? Status { get; set; }
+
     public virtual Duration Duration { get; set; } = null!;
 
     public virtual Specialization Specialization { get; set; } = null!;

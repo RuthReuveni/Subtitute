@@ -66,15 +66,14 @@ namespace SubtituteBL
             }
         }
 
-        public async Task<TeacherDTO> DeleteTeacher(TeacherDTO teacherDTO, int id)
+        public async Task<bool> DeleteTeacher( int id)
         {
 
             try
             {
-                Teacher teacher = _mapper.Map<Teacher>(teacherDTO);
-                Teacher _teacher = await _teacherDl.DeleteTeacher(teacher, id);
-                teacherDTO = _mapper.Map<TeacherDTO>(_teacher);
-                return teacherDTO;
+         
+                return await _teacherDl.DeleteTeacher( id);
+            
             }
             catch (Exception ex)
             {

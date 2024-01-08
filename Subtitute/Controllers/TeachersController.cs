@@ -81,13 +81,13 @@ namespace Subtitute.Controllers
         [HttpDelete("{id}")]
 
 
-        public async Task<TeacherDTO> DeleteTeacher(TeacherDTO teacher, int id)
+        public async Task<bool> DeleteTeacher( int id)
         {
 
             try
             {
-                TeacherDTO _teacher = await _teacherBL.DeleteTeacher(teacher, id);
-                return _teacher;
+             return   await _teacherBL.DeleteTeacher( id);
+                
             }
             catch (Exception ex)
             {

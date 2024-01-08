@@ -41,7 +41,7 @@ public partial class SubstituteDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-R5RADSP;Database= substituteDB;Trusted_Connection=True;TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-R5RADSP;Database=substituteDB;Trusted_Connection=True; encrypt=false; ");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -217,6 +217,7 @@ public partial class SubstituteDbContext : DbContext
             entity.ToTable("SubTTSchool");
 
             entity.Property(e => e.SubTtschoolId).HasColumnName("SubTTSchoolId");
+            entity.Property(e => e.Status).HasDefaultValueSql("((0))");
             entity.Property(e => e.SubTtid).HasColumnName("SubTTId");
 
             entity.HasOne(d => d.School).WithMany(p => p.SubTtschools)

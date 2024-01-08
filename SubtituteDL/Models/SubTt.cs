@@ -33,6 +33,8 @@ public partial class SubTt
 
     public int DurationId { get; set; }
 
+    public bool? Status { get; set; }
+
     public virtual Area Areas { get; set; } = null!;
 
     public virtual Duration Duration { get; set; } = null!;

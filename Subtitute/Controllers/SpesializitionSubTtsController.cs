@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SubtituteBL;
+using SubtituteDTO.DTO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +10,35 @@ namespace Subtitute.Controllers
     [ApiController]
     public class SpesializitionSubTtsController : ControllerBase
     {
+        ISpesializitionSubTtBL _spesializitionSubTtBL;
+        public SpesializitionSubTtsController(ISpesializitionSubTtBL spesializitionSubTtBL)
+        {
+            _spesializitionSubTtBL = spesializitionSubTtBL;
+        }
         // GET: api/<SpesializitionSubTtsController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        [HttpGet("GetAllSpesializitionSubTts")]
 
+        public async Task<List<SpesializitionSubTtDTO>> GetAllSpesializitionSubTts()
+        {
+            List<SpesializitionSubTtDTO> result = await _spesializitionSubTtBL.GetAllSpesializitionSubTts();
+            return result;
+        }
         // GET api/<SpesializitionSubTtsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("GetTeacherBySPId{id}")]
+        public async Task<SpesializitionSubTtDTO> GetTeacherBySPId(int id)
         {
-            return "value";
+            try
+            {
+                SpesializitionSubTtDTO teacherDTO = await _spesializitionSubTtBL.GetTeacherBySPId(id);
+                return teacherDTO;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while conversion to TeacherDTO: {ex.Message}");
+                throw;
+            }
         }
 
-        // POST api/<SpesializitionSubTtsController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
 
-        // PUT api/<SpesializitionSubTtsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<SpesializitionSubTtsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

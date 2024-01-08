@@ -21,7 +21,7 @@ namespace SubtituteDL
         {
             try
             {
-                List<Teacher> result = await _substituteDbContext.Teachers.ToListAsync();
+                List<Teacher> result = await _substituteDbContext.Teachers/*.Where(x=>x.status==1)*/.ToListAsync();
                 return result;
             }
             catch (Exception ex)
@@ -32,6 +32,25 @@ namespace SubtituteDL
                 throw;
             }
         }
+
+
+        //public async Task<List<Teacher>> GetAllTeachersmm()
+        //{
+        //    try
+        //    {
+        //        List<Teacher> result = await _substituteDbContext.Teachers t
+        //            join _substituteDbContext.subtitute  n on  t.mm==n.id
+        //            .ToListAsync();
+        //        return result;
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        Console.WriteLine($"An error occurred while fetching techers: {ex.Message}");
+
+        //        throw;
+        //    }
+        //}
         public async Task<Teacher> GetTeacherById(int id)
         {
             try
@@ -73,14 +92,15 @@ namespace SubtituteDL
             }
         }
 
-        public async Task<Teacher> DeleteTeacher(Teacher teacher, int id)
+        public async Task<bool> DeleteTeacher( int id)
         {
 
             try
             {
                 Teacher result = await _substituteDbContext.Teachers.FirstOrDefaultAsync(t => t.TeacherId == id);
                 _substituteDbContext.Remove(result);
-                return result;
+             await  _substituteDbContext.SaveChangesAsync();
+                return true;
             }
             catch (Exception ex)
             {
@@ -94,9 +114,10 @@ namespace SubtituteDL
         {
             try
             {
-                Teacher _teacher = await _substituteDbContext.Teachers.FirstOrDefaultAsync(t => t.TeacherId == teacher.TeacherId);
+                Teacher _teacher = await _substituteDbContext.Teachers.FirstOrDefaultAsync(t => t.IdNumberT == teacher.IdNumberT);
                 if (_teacher == null)
-                    _substituteDbContext.Add(teacher);
+                    _substituteDbContext.AddAsync(teacher);
+                await _substituteDbContext.SaveChangesAsync();  
                 return teacher;
             }
             catch (Exception ex)

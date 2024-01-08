@@ -5,7 +5,7 @@ namespace SubtituteDL
     public interface ITeacherDL
     {
         Task<Teacher> AddTeacher(Teacher teacher);
-        Task<Teacher> DeleteTeacher(Teacher teacher, int id);
+        Task<bool> DeleteTeacher(int id);
         Task<List<Teacher>> GetAllTeachers();
         Task<Teacher> GetTeacherById(int id);
         Task<Teacher> UpdateTeacher(Teacher teacher, int id);

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SubtituteDL.Models;
 
 namespace SubtituteDL
 {
     public interface ISpesializitionSubTtDL
     {
+        Task<List<SpesializitionSubTt>> GetAllSpesializitionSubTts();
+        Task<List<SpesializitionSubTt>> GetTeacherBySPId(int id);
     }
 }

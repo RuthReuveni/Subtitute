@@ -29,6 +29,8 @@ public partial class School
 
     public string? Password { get; set; }
 
+    public bool? Status { get; set; }
+
     public virtual Area Areas { get; set; } = null!;
 
     public virtual Network NetworkNavigation { get; set; } = null!;

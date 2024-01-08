@@ -79,14 +79,14 @@ public async Task<TeacherDTO> UpdateTeacher(TeacherDTO teacher, int id)
 }
 
         // DELETE api/<SubTtsController>/5
-        [HttpDelete("{id}")]
-public async Task<TeacherDTO> DeleteTeacher(TeacherDTO teacher, int id)
+        [HttpDelete]
+public async Task<bool> DeleteTeacher( int id)
 {
 
     try
     {
-        TeacherDTO _teacher = await _teacherBL.DeleteTeacher(teacher, id);
-        return _teacher;
+       return   await _teacherBL.DeleteTeacher( id);
+        
     }
     catch (Exception ex)
     {
